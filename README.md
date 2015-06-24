@@ -17,7 +17,7 @@ Installation
 
     {
         "require": {
-            "fleetlog/fleetlog-php": "0.0.1"
+            "fleetlog/fleetlog-php": "dev-master"
         }
     }
 
