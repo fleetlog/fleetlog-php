@@ -67,7 +67,7 @@ class FleetlogAPI
 		}
 
 		$this->oauth_access_token = $settings['oauth_access_token'];
-		$this->baseUrl = 'http://localhost:3000/v2/';
+		$this->baseUrl = 'https:/api.fleetlog.com.au/v2/';
 	}
 
 	/**
