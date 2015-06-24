@@ -13,7 +13,7 @@ Installation
 
 **Normally:** Include TwitterAPIExchange.php in your application. 
 
-**Via Composer:** Add to your composer.json file to have FleetlogAPI.php automatically imported into your vendors folder:
+**Composer:** Add to your composer.json file to have FleetlogAPI.php automatically imported into your vendors folder:
 
     {
         "require": {
