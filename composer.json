@@ -1,0 +1,28 @@
+{
+  "require": {
+    "ext-curl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.5,>=4.5.1"
+  },
+  "name": "fleetlog/fleetlog-php",
+  "description": "Simple PHP Wrapper for Fleetlog API v2 calls",
+  "type": "library",
+  "keywords": [
+    "fleetlog",
+    "PHP",
+    "API"
+  ],
+  "homepage": "https://github.com/fleetlog/fleetlog-php",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Viktor Sincak",
+      "email": "viktor@fleetlog.com.au",
+      "url": "https://fleetlog.com.au"
+    }
+  ],
+  "autoload": {
+    "files": ["FleetlogAPI.php"]
+  }
+}
