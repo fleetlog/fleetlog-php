@@ -67,7 +67,7 @@ class FleetlogAPI
 		}
 
 		$this->oauth_access_token = $settings['oauth_access_token'];
-		$this->baseUrl = 'https:/api.fleetlog.com.au/v2/';
+		$this->baseUrl = 'https://api.fleetlog.com.au/v2/';
 	}
 
 	/**
@@ -172,7 +172,17 @@ class FleetlogAPI
 	public function performRequest($curlOptions = array())
 	{
 
-		$headers =  ['Content-type: application/json', 'Authorization: Bearer '.$this->oauth_access_token];
+		$headers =  ['Authorization: Bearer '.$this->oauth_access_token];
+
+		// For /token [POST] route
+		if (in_array('Content-type: application/x-www-form-urlencoded', $curlOptions))
+		{
+			array_push($headers, 'Content-type: application/x-www-form-urlencoded');
+
+		} else
+		{
+			array_push($headers, 'Content-type: application/json');
+		}
 
 		$getfield = $this->getGetfield();
 		$postfields = $this->getPostfields();
@@ -236,9 +246,18 @@ class FleetlogAPI
 		{
 			$this->setGetfield($data);
 		}
-		else
+
+		if (strtolower($method) === 'post'
+			|| strtolower($method) === 'put'
+			|| strtolower($method) === 'patch')
 		{
 			$this->setPostfields($data);
+			$curlOptions + array('CURLOPT_CUSTOMREQUEST' => strtoupper($method));
+		}
+
+		if (strtolower($method) === 'delete')
+		{
+			$curlOptions + array('CURLOPT_CUSTOMREQUEST' => 'DELETE');
 		}
 
 		return $this->performRequest($curlOptions);
