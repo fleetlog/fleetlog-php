@@ -24,5 +24,10 @@
   ],
   "autoload": {
     "files": ["FleetlogAPI.php"]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "dev-master"
+    }
   }
 }
