@@ -45,3 +45,21 @@ $requestMethod = 'GET';
 $fleetlog = new FleetlogAPI($settings);
 echo json_encode($fleetlog->request('trips', 'GET', '?limit=1'));
 ```
+
+Obtain an access token
+--------------------
+```php
+$requestMethod = 'POST';
+$body = array(
+	'username' => 'joe@doe.com',
+	'password' => 'keyBoardCat',
+	'grant_type' => 'password',
+	'client_id' => 'clientId',
+	'client_secret' => 'clientSecret',
+);
+
+
+$customHeaders = ['Content-type: application/x-www-form-urlencoded'];
+$fleetlog = new FleetlogAPI($settings);
+echo json_encode($fleetlog->request('token', 'POST', $body, $customHeaders));
+```
