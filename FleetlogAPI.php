@@ -11,6 +11,7 @@
  * @version  0.0.2
  * @link     https://github.com/fleetlog/fleetlog-php
  */
+
 class FleetlogAPI
 {
 	/**
@@ -54,20 +55,31 @@ class FleetlogAPI
 	 *
 	 * @param array $settings
 	 */
-	public function __construct(array $settings)
+	public function __construct(array $settings = NULL)
 	{
 		if (!in_array('curl', get_loaded_extensions()))
 		{
 			throw new Exception('You need to install cURL, see: http://curl.haxx.se/docs/install.html');
 		}
 
-		if (!isset($settings['oauth_access_token']))
+		if (isset($settings['oauth_access_token']))
 		{
-			throw new Exception('Make sure you are passing in the correct parameters');
+			$this->oauth_access_token = $settings['oauth_access_token'];
+		} else {
+			$this->oauth_access_token = NULL;
 		}
 
-		$this->oauth_access_token = $settings['oauth_access_token'];
 		$this->baseUrl = 'https://api.fleetlog.com.au/v2/';
+	}
+
+	/**
+	 * Set access token
+	 *
+	 * @param $accessToken
+	 */
+	public function setAccessToken($accessToken)
+	{
+		$this->oauth_access_token = $accessToken;
 	}
 
 	/**
@@ -79,7 +91,7 @@ class FleetlogAPI
 	 *
 	 * @return FleetlogAPI Instance of self for method chaining
 	 */
-	public function setPostfields(array $array)
+	public function setPostfields(array $array = NULL)
 	{
 		if (!is_null($this->getGetfield()))
 		{
@@ -172,7 +184,11 @@ class FleetlogAPI
 	public function performRequest($curlOptions = array())
 	{
 
-		$headers =  ['Authorization: Bearer '.$this->oauth_access_token];
+		if (!is_null($this->oauth_access_token)) {
+			$headers =  ['Authorization: Bearer '.$this->oauth_access_token];
+		} else {
+			$headers = [];
+		}
 
 		// For /token [POST] route
 		if (in_array('Content-type: application/x-www-form-urlencoded', $curlOptions))

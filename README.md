@@ -32,9 +32,28 @@ How To Use
 require_once('FleetlogAPI.php');
 ```
 
+Obtain an access token (client_credentials grant)
+--------------------
+```php
+$body = array(
+	'grant_type' => 'client_credentials',
+	'client_id' => 'yourCLientId',
+	'client_secret' => 'yourClientSecret'
+);
+
+$customHeaders = ['Content-type: application/x-www-form-urlencoded'];
+$fleetlog = new \FleetlogAPI();
+$resultBody = $fleetlog->request('token', 'POST', $body, $customHeaders);
+echo json_encode($resultBody);
+
+$fleetlog->setAccessToken($resultBody->access_token);
+$vehicles =  $fleetlog->request('vehicles', 'GET');
+echo json_encode($vehicles);
+```
+
 GET Request Example
 -------------------
-[GET] https://api.fleetlog.com.au/v2/trips?limit=1
+[GET] https://api.fleetlog.com.au/v2/vehicles/222
 
 ```php
 $settings = array(
@@ -43,23 +62,17 @@ $settings = array(
 
 $requestMethod = 'GET';
 $fleetlog = new FleetlogAPI($settings);
-echo json_encode($fleetlog->request('trips', 'GET', '?limit=1'));
+echo json_encode($fleetlog->request('vehicles/222', 'GET'));
 ```
 
-Obtain an access token
---------------------
+[GET] https://api.fleetlog.com.au/v2/vehicles/222/positions
+
 ```php
-$requestMethod = 'POST';
-$body = array(
-	'username' => 'joe@doe.com',
-	'password' => 'keyBoardCat',
-	'grant_type' => 'password',
-	'client_id' => 'clientId',
-	'client_secret' => 'clientSecret',
+$settings = array(
+	'oauth_access_token' => "your_access_token",
 );
 
-
-$customHeaders = ['Content-type: application/x-www-form-urlencoded'];
+$requestMethod = 'GET';
 $fleetlog = new FleetlogAPI($settings);
-echo json_encode($fleetlog->request('token', 'POST', $body, $customHeaders));
+echo json_encode($fleetlog->request('vehicles/222/positions', 'GET'));
 ```
